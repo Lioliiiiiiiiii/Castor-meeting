@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<title>Les castors se retrouvent</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(#cce7ff, #eaf6ff);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  width: 90%;
+  max-width: 900px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.sub {
+  margin-bottom: 40px;
+  font-size: 18px;
+}
+
+.river {
+  position: relative;
+  height: 140px;
+  background: #b3d9ff;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-container {
+  position: absolute;
+  bottom: 30px;
+  left: 5%;
+  width: 90%;
+  height: 18px;
+  background: #ffffff80;
+  border-radius: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #7a5c3e;
+  border-radius: 10px;
+  transition: width 1s ease;
+}
+
+.beaver {
+  position: absolute;
+  bottom: 50px;
+  width: 70px;
+  transition: left 1s ease;
+}
+
+.heart {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40px;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.footer {
+  margin-top: 25px;
+  font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>🦫 Les castors se rapprochent</h1>
+  <div class="sub" id="daysText"></div>
+
+  <div class="river">
+    <div class="heart" id="heart">❤️</div>
+
+    <img src="beaver-left.png" class="beaver" id="beaverLeft">
+    <img src="beaver-right.png" class="beaver" id="beaverRight">
+
+    <div class="progress-container">
+      <div class="progress-bar" id="bar"></div>
+    </div>
+  </div>
+
+  <div class="footer" id="percentText"></div>
+</div>
+
+<script>
+const start = new Date("2026-01-15T00:00:00");
+const end = new Date("2026-05-03T00:00:00");
+
+function update() {
+  const now = new Date();
+
+  const total = end - start;
+  const elapsed = now - start;
+
+  let progress = elapsed / total;
+  progress = Math.max(0, Math.min(1, progress));
+
+  const percent = progress * 100;
+
+  // Barre
+  document.getElementById("bar").style.width = percent + "%";
+
+  // Position castors
+  const leftPos = progress * 50;
+  const rightPos = 100 - (progress * 50);
+
+  const left = document.getElementById("beaverLeft");
+  const right = document.getElementById("beaverRight");
+
+  left.style.left = leftPos + "%";
+  right.style.left = rightPos + "%";
+  right.style.transform = "translateX(-100%)";
+
+  // Texte %
+  document.getElementById("percentText").innerText =
+    Math.round(percent) + "% du temps écoulé";
+
+  // Jours restants
+  const daysLeft = Math.ceil((end - now) / (1000*60*60*24));
+  document.getElementById("daysText").innerText =
+    daysLeft > 0
+      ? daysLeft + " jours avant qu'ils se retrouvent"
+      : "Ils sont enfin réunis !";
+
+  // Cœur à la fin
+  if (progress >= 1) {
+    document.getElementById("heart").style.opacity = 1;
+  }
+}
+
+update();
+setInterval(update, 60000); // se met à jour toutes les minutes
+</script>
+
+</body>
+</html>
