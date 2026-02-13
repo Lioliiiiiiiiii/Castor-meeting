@@ -8,7 +8,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(#cce7ff, #eaf6ff);
+  background: linear-gradient(#cfeeff, #eaf7ff);
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -17,60 +17,96 @@ body {
 
 .card {
   width: 90%;
-  max-width: 900px;
+  max-width: 1000px;
   text-align: center;
 }
 
 h1 {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 .sub {
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   font-size: 18px;
 }
 
+/* RIVIÈRE */
 .river {
   position: relative;
-  height: 140px;
-  background: #b3d9ff;
-  border-radius: 20px;
+  height: 170px;
+  border-radius: 25px;
   overflow: hidden;
+  background: linear-gradient(90deg, #b3e0ff, #cdeeff, #b3e0ff);
+  background-size: 200% 100%;
+  animation: water 8s linear infinite;
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.1);
 }
 
+@keyframes water {
+  from { background-position: 0% 0; }
+  to { background-position: 200% 0; }
+}
+
+/* Barre */
 .progress-container {
   position: absolute;
-  bottom: 30px;
+  bottom: 35px;
   left: 5%;
   width: 90%;
-  height: 18px;
-  background: #ffffff80;
-  border-radius: 10px;
+  height: 20px;
+  background: rgba(255,255,255,0.6);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
 }
 
 .progress-bar {
   height: 100%;
   width: 0%;
-  background: #7a5c3e;
-  border-radius: 10px;
+  background: linear-gradient(90deg, #7a5c3e, #a07a52);
+  border-radius: 12px;
   transition: width 1s ease;
 }
 
+/* Castors */
 .beaver {
   position: absolute;
-  bottom: 50px;
-  width: 70px;
+  bottom: 70px;
+  width: 80px;
   transition: left 1s ease;
+  animation: float 3s ease-in-out infinite;
 }
 
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+/* Cœur */
 .heart {
   position: absolute;
-  bottom: 90px;
+  bottom: 115px;
   left: 50%;
-  transform: translateX(-50%);
-  font-size: 40px;
+  transform: translateX(-50%) scale(0);
+  font-size: 42px;
   opacity: 0;
-  transition: opacity 1s ease;
+}
+
+.heart.show {
+  animation: pop 1s forwards, pulse 1.5s 1s infinite;
+}
+
+@keyframes pop {
+  to {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.2); }
+  100% { transform: translateX(-50%) scale(1); }
 }
 
 .footer {
@@ -115,10 +151,8 @@ function update() {
 
   const percent = progress * 100;
 
-  // Barre
   document.getElementById("bar").style.width = percent + "%";
 
-  // Position castors
   const leftPos = progress * 50;
   const rightPos = 100 - (progress * 50);
 
@@ -129,25 +163,22 @@ function update() {
   right.style.left = rightPos + "%";
   right.style.transform = "translateX(-100%)";
 
-  // Texte %
   document.getElementById("percentText").innerText =
     Math.round(percent) + "% du temps écoulé";
 
-  // Jours restants
   const daysLeft = Math.ceil((end - now) / (1000*60*60*24));
   document.getElementById("daysText").innerText =
     daysLeft > 0
       ? daysLeft + " jours avant qu'ils se retrouvent"
       : "Ils sont enfin réunis !";
 
-  // Cœur à la fin
   if (progress >= 1) {
-    document.getElementById("heart").style.opacity = 1;
+    document.getElementById("heart").classList.add("show");
   }
 }
 
 update();
-setInterval(update, 60000); // se met à jour toutes les minutes
+setInterval(update, 60000);
 </script>
 
 </body>
