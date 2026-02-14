@@ -4,6 +4,10 @@
 <meta charset="UTF-8" />
 <title>Castors Meeting</title>
 
+@font-face {
+  font-family: 'Minecraft';
+  src: url('./Minecraftia-Regular.ttf') format('truetype');
+}
 <style>
 /* ====== STYLE GLOBAL ====== */
 body {
@@ -14,7 +18,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: monospace;
+  font-family: 'Minecraft', monospace;
   image-rendering: pixelated;
   overflow-x: hidden;
 }
@@ -27,7 +31,10 @@ body {
     2px -2px 0 #000,
     -2px -2px 0 #000;
 }
-
+h1, .sub, .footer, .valentine-sign {
+  font-family: 'Minecraft', monospace;
+}
+  
 /* ====== CARTE ====== */
 .card {
   width: 90%;
