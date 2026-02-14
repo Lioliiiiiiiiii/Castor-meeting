@@ -4,104 +4,123 @@
 <meta charset="UTF-8" />
 <title>Castors Meeting</title>
 
+<!-- Police pixel style Minecraft -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(#fdf6f9, #ffeef5);
+  font-family: 'Press Start 2P', cursive;
+  background: #46020E;
+  color: white;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  image-rendering: pixelated;
+  cursor: crosshair;
 }
 
 .card {
   width: 90%;
   max-width: 1000px;
   text-align: center;
+  position: relative;
 }
 
 h1 {
-  margin-bottom: 10px;
-}
-
-.sub {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   font-size: 18px;
 }
 
-/* Zone principale */
+/* Pancarte Minecraft */
+.sign {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #9F0421;
+  padding: 20px;
+  border: 6px solid #FB607C;
+  box-shadow: 6px 6px 0px #46020E;
+  font-size: 10px;
+  line-height: 1.6em;
+  text-align: center;
+}
+
+/* Zone principale pixel */
 .stage {
   position: relative;
-  height: 170px;
-  border-radius: 25px;
-  background: #fff0f6;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  height: 180px;
+  border: 6px solid #FB607C;
+  background: #9F0421;
+  box-shadow: 8px 8px 0px #46020E;
 }
 
 /* Barre */
 .progress-container {
   position: absolute;
-  bottom: 35px;
+  bottom: 30px;
   left: 5%;
   width: 90%;
-  height: 20px;
-  background: rgba(255,255,255,0.7);
-  border-radius: 12px;
+  height: 24px;
+  background: #46020E;
+  border: 4px solid #FB607C;
 }
 
 .progress-bar {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #ff7eb3, #ff4d94);
-  border-radius: 12px;
-  transition: width 1s ease;
+  background: #FB607C;
+  transition: width 1s linear;
 }
 
 /* Castors */
 .beaver {
   position: absolute;
-  bottom: 70px;
-  width: 80px;
-  transition: left 1s ease;
-  animation: float 3s ease-in-out infinite;
+  bottom: 80px;
+  width: 90px;
+  transition: left 1s linear;
+  image-rendering: pixelated;
 }
 
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0px); }
+/* Texte */
+.sub {
+  margin-bottom: 30px;
+  font-size: 12px;
+}
+
+.footer {
+  margin-top: 25px;
+  font-size: 12px;
 }
 
 /* Cœurs curseur */
 .cursor-heart {
-  position: absolute;
+  position: fixed;
   pointer-events: none;
-  animation: floatUp 2s ease-out forwards;
-  opacity: 1;
+  animation: floatUp 1.5s linear forwards;
   z-index: 9999;
 }
 
 @keyframes floatUp {
   0% {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%);
     opacity: 1;
   }
   100% {
-    transform: translate(-50%, -120px) scale(1.5);
+    transform: translate(-50%, -100px);
     opacity: 0;
   }
-}
-
-.footer {
-  margin-top: 25px;
-  font-size: 20px;
 }
 </style>
 </head>
 
 <body>
+
+<div class="sign">
+  Bonne Saint Valentin<br>
+  mon coeur &lt;3
+</div>
 
 <div class="card">
   <h1>Castors Meeting</h1>
@@ -148,7 +167,7 @@ function update() {
   right.style.transform = "translateX(-100%)";
 
   document.getElementById("percentText").innerText =
-    Math.round(percent) + "% of the time passed";
+    Math.round(percent) + "% completed";
 
   const daysLeft = Math.ceil((end - now) / (1000*60*60*24));
   document.getElementById("daysText").innerText =
@@ -160,8 +179,9 @@ function update() {
 update();
 setInterval(update, 60000);
 
+
 /* ===========================
-   Traînée de cœurs au curseur
+   Traînée de cœurs corrigée
 =========================== */
 
 let lastHeartTime = 0;
@@ -171,7 +191,7 @@ document.addEventListener('mousemove', function(e) {
   const now = Date.now();
   
   if (now - lastHeartTime > heartDelay) {
-    createHeart(e.pageX, e.pageY);
+    createHeart(e.clientX, e.clientY);
     lastHeartTime = now;
   }
 });
@@ -179,21 +199,19 @@ document.addEventListener('mousemove', function(e) {
 function createHeart(x, y) {
   const heart = document.createElement('div');
   heart.className = 'cursor-heart';
-  heart.innerHTML = ['❤️', '💕', '💖', '💗', '💓', '💝'][Math.floor(Math.random() * 6)];
+  heart.innerHTML = '❤';
   heart.style.left = x + 'px';
   heart.style.top = y + 'px';
-  
-  const size = 18 + Math.random() * 12;
-  heart.style.fontSize = size + 'px';
-  
+  heart.style.fontSize = (12 + Math.random() * 10) + 'px';
+  heart.style.color = '#FB607C';
+
   document.body.appendChild(heart);
-  
+
   setTimeout(() => {
     heart.remove();
-  }, 2000);
+  }, 1500);
 }
 </script>
 
 </body>
 </html>
-
