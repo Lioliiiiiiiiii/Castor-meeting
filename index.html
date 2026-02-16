@@ -57,7 +57,6 @@ h1 {
   border: 6px solid #FB607C;
   padding: 15px;
   font-size: 12px;
-  display: none;
   box-shadow: 6px 6px 0 #000;
 }
 
@@ -123,8 +122,8 @@ h1 {
 <body>
 
 <div class="sign pixel-text" id="valentineSign">
-  Bonne Saint Valentin<br>
-  mon coeur &lt;3
+  Profite bien <br>
+  avec tes copains
 </div>
 
 <div class="card">
@@ -151,11 +150,6 @@ const end = new Date("2026-05-03T00:00:00");
 
 function update() {
   const now = new Date();
-
-  /* ===== Afficher panneau uniquement le 14 février ===== */
-  if (now.getMonth() === 1 && now.getDate() === 14) {
-    document.getElementById("valentineSign").style.display = "block";
-  }
 
   const total = end - start;
   const elapsed = now - start;
