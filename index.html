@@ -59,7 +59,22 @@ h1 {
   font-size: 12px;
   box-shadow: 6px 6px 0 #000;
 }
+/* ====== EMOJI EXPLOSION ====== */
+@keyframes emojiGrow {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.3; }
+  80%  { transform: translate(-50%, -50%) scale(8);   opacity: 1;   }
+  100% { transform: translate(-50%, -50%) scale(12);  opacity: 0;   }
+}
 
+.emoji-explosion {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  font-size: 80px;
+  pointer-events: none;
+  z-index: 99999;
+  animation: emojiGrow 2.5s ease-in forwards;
+}
 /* ====== STAGE ====== */
 .stage {
   position: relative;
@@ -212,6 +227,16 @@ function createHeart(x, y) {
     heart.remove();
   }, 1200);
 }
+  /* ===== EMOJI EXPLOSION ===== */
+setTimeout(() => {
+  const emoji = document.createElement('div');
+  emoji.className = 'emoji-explosion';
+  emoji.innerText = '😫';
+  document.body.appendChild(emoji);
+
+  setTimeout(() => emoji.remove(), 2500);
+}, 1000);
+  
 </script>
 
 </body>
